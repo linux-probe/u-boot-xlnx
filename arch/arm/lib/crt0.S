@@ -73,7 +73,7 @@ ENTRY(_main)
 #if defined(CONFIG_SPL_BUILD) && defined(CONFIG_SPL_STACK)
 	ldr	sp, =(CONFIG_SPL_STACK)
 #else
-	ldr	sp, =(CONFIG_SYS_INIT_SP_ADDR)
+	ldr	sp, =(CONFIG_SYS_INIT_SP_ADDR) /*设置堆栈指针*/
 #endif
 #if defined(CONFIG_CPU_V7M)	/* v7M forbids using SP as BIC destination */
 	mov	r3, sp
@@ -83,7 +83,7 @@ ENTRY(_main)
 	bic	sp, sp, #7	/* 8-byte alignment for ABI compliance */
 #endif
 	mov	r0, sp
-	bl	board_init_f_alloc_reserve
+	bl	board_init_f_alloc_reserve /* 初始化malloc空间和global_data空间*/
 	mov	sp, r0
 	/* set up gd here, outside any C code */
 	mov	r9, r0

@@ -37,7 +37,7 @@
 
 reset:
 	/* Allow the board to save important registers */
-	b	save_boot_params
+	b	save_boot_params  
 save_boot_params_ret:
 #ifdef CONFIG_ARMV7_LPAE
 /*

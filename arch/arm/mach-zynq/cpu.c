@@ -21,10 +21,10 @@ int arch_cpu_init(void)
 	writel(0x757BDF0D, &devcfg_base->unlock);
 	writel(0xFFFFFFFF, &devcfg_base->rom_shadow);
 
+/*CONFIG_SYS_SDRAM_BASE宏没有定义，默认值为0，所以下面代码汇编编译*/
 #if (CONFIG_SYS_SDRAM_BASE == 0)
 	/* remap DDR to zero, FILTERSTART */
 	writel(0, &scu_base->filter_start);
-
 	/* OCM_CFG, Mask out the ROM, map ram into upper addresses */
 	writel(0x1F, &slcr_base->ocm_cfg);
 	/* FPGA_RST_CTRL, clear resets on AXI fabric ports */
