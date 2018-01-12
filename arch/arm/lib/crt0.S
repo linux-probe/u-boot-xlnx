@@ -90,6 +90,7 @@ ENTRY(_main)
 	bl	board_init_f_init_reserve
 
 	mov	r0, #0
+	/*调用common/board_f.c的board_init_f*/
 	bl	board_init_f
 
 #if ! defined(CONFIG_SPL_BUILD)
