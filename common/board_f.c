@@ -432,7 +432,7 @@ static int reserve_round_4k(void)
 __weak int reserve_mmu(void)
 {
 	/* reserve TLB table */
-	gd->arch.tlb_size = PGTABLE_SIZE;
+	gd->arch.tlb_size = PGTABLE_SIZE;/*4K*/
 	gd->relocaddr -= gd->arch.tlb_size;
 
 	/* round down to next 64 kB limit */
@@ -851,7 +851,7 @@ static init_fnc_t init_sequence_f[] = {
 #endif
 	setup_mon_len,
 #ifdef CONFIG_OF_CONTROL
-	fdtdec_setup,
+	fdtdec_setup,/*gd->fdt_blob = __dtb_dt_begin;*/
 #endif
 #ifdef CONFIG_TRACE
 	trace_early_init,
@@ -904,6 +904,7 @@ static init_fnc_t init_sequence_f[] = {
 #if defined(CONFIG_SYS_FSL_CLK) || defined(CONFIG_M68K)
 	get_clocks,
 #endif
+	/*env_sf.c*/
 	env_init,		/* initialize environment */
 #if defined(CONFIG_8xx_CPUCLK_DEFAULT)
 	/* get CPU and bus clocks according to the environment variable */
@@ -913,6 +914,7 @@ static init_fnc_t init_sequence_f[] = {
 	init_timebase,
 #endif
 	init_baud_rate,		/* initialze baudrate settings */
+	/*serial-uclass.c*/
 	serial_init,		/* serial communications setup */
 	console_init_f,		/* stage 1 init of console */
 #ifdef CONFIG_SANDBOX
@@ -953,6 +955,7 @@ static init_fnc_t init_sequence_f[] = {
 #if defined(CONFIG_ARM) || defined(CONFIG_X86) || defined(CONFIG_NDS32) || \
 		defined(CONFIG_MICROBLAZE) || defined(CONFIG_AVR32) || \
 		defined(CONFIG_SH)
+	/*xilinx/zynq/board.c:145*/
 	dram_init,		/* configure available RAM banks */
 #endif
 #if defined(CONFIG_MIPS) || defined(CONFIG_PPC) || defined(CONFIG_M68K)

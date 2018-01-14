@@ -1235,6 +1235,9 @@ int fdtdec_setup(void)
 {
 #if CONFIG_IS_ENABLED(OF_CONTROL)
 # ifdef CONFIG_OF_EMBED
+	/*执行该部分
+	 *__dtb_dt_begin定义在 dt.dtb.S中
+	 */
 	/* Get a pointer to the FDT */
 	gd->fdt_blob = __dtb_dt_begin;
 # elif defined CONFIG_OF_SEPARATE
