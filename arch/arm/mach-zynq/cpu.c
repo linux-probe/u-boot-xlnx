@@ -47,9 +47,12 @@ unsigned int zynq_get_silicon_version(void)
 						>> ZYNQ_SILICON_VER_SHIFT;
 }
 
+extern int dyn_test(void);
+
 void reset_cpu(ulong addr)
 {
 	zynq_slcr_cpu_reset();
+	dyn_test();
 	while (1)
 		;
 }

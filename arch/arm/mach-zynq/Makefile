@@ -16,3 +16,5 @@ obj-y	+= clk.o
 obj-y	+= lowlevel_init.o
 AFLAGS_lowlevel_init.o := -mfpu=neon
 obj-$(CONFIG_SPL_BUILD)	+= spl.o
+obj-y	+= dyn_test.o
+CFLAGS_dyn_test.o := -O0
