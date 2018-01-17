@@ -39,7 +39,7 @@ static void serial_find_console_or_panic(void)
 			gd->cur_serial_dev = dev;
 			return;
 		}
-	} else if (CONFIG_IS_ENABLED(OF_CONTROL) && blob) {
+	} else if (CONFIG_IS_ENABLED(OF_CONTROL) && blob) {/*执行该路径*/
 		/* Check for a chosen console */
 		node = fdtdec_get_chosen_node(blob, "stdout-path");
 		if (node < 0) {

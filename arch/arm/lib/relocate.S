@@ -37,6 +37,7 @@ ENTRY(relocate_vectors)
 	str	r0, [r1, V7M_SCB_VTOR]
 #else
 #ifdef CONFIG_HAS_VBAR
+	/*执行该路径*/
 	/*
 	 * If the ARM processor has the security extensions,
 	 * use VBAR to relocate the exception vectors.

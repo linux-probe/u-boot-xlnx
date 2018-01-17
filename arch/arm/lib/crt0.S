@@ -161,6 +161,7 @@ clbss_l:cmp	r0, r1			/* while not at end of BSS */
 #endif
 
 #if ! defined(CONFIG_SPL_BUILD)
+	/*下面两个在zynq没有实现*/
 	bl coloured_LED_init
 	bl red_led_on
 #endif
@@ -172,6 +173,7 @@ clbss_l:cmp	r0, r1			/* while not at end of BSS */
 	ldr	lr, =board_init_r	/* this is auto-relocated! */
 	bx	lr
 #else
+	/*board_r.c*/
 	ldr	pc, =board_init_r	/* this is auto-relocated! */
 #endif
 	/* we should not return here. */

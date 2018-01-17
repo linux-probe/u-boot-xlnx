@@ -187,6 +187,7 @@ static int initr_reloc_global_data(void)
 
 static int initr_serial(void)
 {
+	/*serial-uclass.c*/
 	serial_initialize();
 	return 0;
 }
