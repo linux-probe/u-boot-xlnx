@@ -54,6 +54,7 @@ static int uclass_add(enum uclass_id id, struct uclass **ucp)
 	int ret;
 
 	*ucp = NULL;
+	/*在 uclass_driver段中查找对伊id的uclass_driver*/
 	uc_drv = lists_uclass_lookup(id);
 	if (!uc_drv) {
 		debug("Cannot find uclass for id %d: please add the UCLASS_DRIVER() declaration for this UCLASS_... id\n",
@@ -75,9 +76,10 @@ static int uclass_add(enum uclass_id id, struct uclass **ucp)
 			goto fail_mem;
 		}
 	}
-	uc->uc_drv = uc_drv;
+	uc->uc_drv = uc_drv;/*uclass和uclass_driver绑定*/
 	INIT_LIST_HEAD(&uc->sibling_node);
 	INIT_LIST_HEAD(&uc->dev_head);
+	/*将该uc添加到((gd_t *)gd)->uclass_root*/
 	list_add(&uc->sibling_node, &DM_UCLASS_ROOT_NON_CONST);
 
 	if (uc_drv->init) {
@@ -140,6 +142,7 @@ int uclass_get(enum uclass_id id, struct uclass **ucp)
 	struct uclass *uc;
 
 	*ucp = NULL;
+	/*在gd->uclass_root中查找uc->uc_drv->id == key的uclass*/
 	uc = uclass_find(id);
 	if (!uc)
 		return uclass_add(id, ucp);
@@ -401,6 +404,8 @@ int uclass_get_device_by_of_offset(enum uclass_id id, int node,
 	int ret;
 
 	*devp = NULL;
+	/*根据id查找对应的uc，然后从uc->dev_head链表中找出node匹配
+	的dev*/
 	ret = uclass_find_device_by_of_offset(id, node, &dev);
 	return uclass_get_device_tail(dev, ret, devp);
 }

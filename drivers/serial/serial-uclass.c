@@ -41,6 +41,9 @@ static void serial_find_console_or_panic(void)
 		}
 	} else if (CONFIG_IS_ENABLED(OF_CONTROL) && blob) {/*执行该路径*/
 		/* Check for a chosen console */
+		/**
+		 *在chosen节点中查找stdout-path节点，synq没有定义
+		 */
 		node = fdtdec_get_chosen_node(blob, "stdout-path");
 		if (node < 0) {
 			const char *str, *p, *name;
@@ -52,12 +55,16 @@ static void serial_find_console_or_panic(void)
 			 * We need to look up the alias and then follow it to
 			 * the correct node.
 			 */
+			/*chosen节点中stdout-path = "serial0:115200n8"*/
 			str = fdtdec_get_chosen_prop(blob, "stdout-path");
 			if (str) {
 				p = strchr(str, ':');
+				/*在aliases节点中查找serial0属性，serial0 = &uart1;
+				 *在dts编译之后为：serial0 = "/amba/serial@e0001000"
+				 */
 				name = fdt_get_alias_namelen(blob, str,
 						p ? p - str : strlen(str));
-				if (name)
+				if (name)/*获得/amba/serial@e0001000节点*/
 					node = fdt_path_offset(blob, name);
 			}
 		}
@@ -211,6 +218,7 @@ void serial_stdio_init(void)
 {
 }
 
+/*定义了SERIAL_PRESENT和CONFIG_DM_STDIO*/
 #if defined(CONFIG_DM_STDIO) && CONFIG_IS_ENABLED(SERIAL_PRESENT)
 static void serial_stub_putc(struct stdio_dev *sdev, const char ch)
 {
@@ -326,7 +334,7 @@ static int serial_post_probe(struct udevice *dev)
 		if (ret)
 			return ret;
 	}
-
+/*定义了CONFIG_DM_STDIO*/
 #ifdef CONFIG_DM_STDIO
 	if (!(gd->flags & GD_FLG_RELOC))
 		return 0;

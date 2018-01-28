@@ -213,6 +213,8 @@ fail_alloc1:
 	return ret;
 }
 
+/*name：节点name，driver id_table中的driver_data，
+of_offset节点在dtb中的offset*/
 int device_bind_with_driver_data(struct udevice *parent,
 				 const struct driver *drv, const char *name,
 				 ulong driver_data, int of_offset,
@@ -345,6 +347,7 @@ int device_probe(struct udevice *dev)
 	if (dev->parent && device_get_uclass_id(dev) != UCLASS_PINCTRL)
 		pinctrl_select_state(dev, "default");
 
+	/*调用uclass driver的probe类函数*/
 	ret = uclass_pre_probe_device(dev);
 	if (ret)
 		goto fail;
@@ -360,7 +363,7 @@ int device_probe(struct udevice *dev)
 		if (ret)
 			goto fail;
 	}
-
+	/*调用drv的probe函数*/
 	if (drv->probe) {
 		ret = drv->probe(dev);
 		if (ret) {
@@ -368,7 +371,7 @@ int device_probe(struct udevice *dev)
 			goto fail;
 		}
 	}
-
+	/*调用uclass driver post probe函数*/
 	ret = uclass_post_probe_device(dev);
 	if (ret)
 		goto fail_uclass;

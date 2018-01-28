@@ -114,7 +114,7 @@ static int driver_check_compatible(const struct udevice_id *of_match,
 {
 	if (!of_match)
 		return -ENOENT;
-
+	/*遍历driver的compatible和dtb中给的compat匹配*/
 	while (of_match->compatible) {
 		if (!strcmp(of_match->compatible, compat)) {
 			*of_idp = of_match;
@@ -165,8 +165,9 @@ int lists_bind_fdt(struct udevice *parent, const void *blob, int offset,
 		compat = compat_list + i;
 		dm_dbg("   - attempt to match compatible string '%s'\n",
 		       compat);
-
+		/*和driver段中的说有driver匹配*/
 		for (entry = driver; entry != driver + n_ents; entry++) {
+			/*有匹配的driver，则返回0，*/
 			ret = driver_check_compatible(entry->of_match, &id,
 						      compat);
 			if (!ret)

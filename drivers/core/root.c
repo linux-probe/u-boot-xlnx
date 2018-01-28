@@ -254,6 +254,7 @@ int dm_init_and_scan(bool pre_reloc_only)
 		debug("dm_init() failed: %d\n", ret);
 		return ret;
 	}
+	/*遍历通过手动指定的U_BOOT_DEVICE*/
 	ret = dm_scan_platdata(pre_reloc_only);
 	if (ret) {
 		debug("dm_scan_platdata() failed: %d\n", ret);
