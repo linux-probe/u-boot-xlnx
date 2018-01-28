@@ -48,5 +48,6 @@ void zynq_ddrc_init(void)
 	} else {
 		puts("ECC disabled ");
 	}
+	puts("\n");
 }
 #endif

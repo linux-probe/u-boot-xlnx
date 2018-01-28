@@ -336,11 +336,11 @@ __weak phys_size_t board_reserve_ram_top(phys_size_t ram_size)
 
 static int setup_dest_addr(void)
 {
-	debug("Monitor len: %08lX\n", gd->mon_len);
+	printf("Monitor len: %08lX\n", gd->mon_len);
 	/*
 	 * Ram is setup, size stored in gd !!
 	 */
-	debug("Ram size: %08lX\n", (ulong)gd->ram_size);
+	printf("Ram size: %08lX\n", (ulong)gd->ram_size);
 #ifdef CONFIG_SYS_MEM_RESERVE_SECURE
 	/* Reserve memory for secure MMU tables, and/or security monitor */
 	gd->ram_size -= CONFIG_SYS_MEM_RESERVE_SECURE;
@@ -367,7 +367,7 @@ static int setup_dest_addr(void)
 	gd->ram_top += get_effective_memsize();
 	gd->ram_top = board_get_usable_ram_top(gd->mon_len);
 	gd->relocaddr = gd->ram_top;
-	debug("Ram top: %08lX\n", (ulong)gd->ram_top);
+	printf("Ram top: %08lX\n", (ulong)gd->ram_top);
 #if defined(CONFIG_MP) && (defined(CONFIG_MPC86xx) || defined(CONFIG_E500))
 	/*
 	 * We need to make sure the location we intend to put secondary core
@@ -524,7 +524,7 @@ static int reserve_uboot(void)
 	gd->relocaddr &= ~(65536 - 1);
 #endif
 
-	debug("Reserving %ldk for U-Boot at: %08lx\n", gd->mon_len >> 10,
+	printf("Reserving %ldk for U-Boot at: %08lx\n", gd->mon_len >> 10,
 	      gd->relocaddr);
 
 	gd->start_addr_sp = gd->relocaddr;
@@ -1094,6 +1094,8 @@ void board_init_f(ulong boot_flags)
 	/* NOTREACHED - jump_to_copy() does not return */
 	hang();
 #endif
+	printf("%s end\n", __func__);
+
 }
 
 #if defined(CONFIG_X86) || defined(CONFIG_ARC)

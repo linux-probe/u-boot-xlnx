@@ -111,6 +111,7 @@ int board_late_init(void)
 		break;
 	}
 
+	printf("%s modeboot:%s\n", __func__, getenv("modeboot"));
 	return 0;
 }
 

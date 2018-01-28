@@ -991,10 +991,10 @@ void board_init_r(gd_t *new_gd, ulong dest_addr)
 	for (i = 0; i < ARRAY_SIZE(init_sequence_r); i++)
 		init_sequence_r[i] += gd->reloc_off;
 #endif
-
+	printf("%s start\n", __func__);
 	if (initcall_run_list(init_sequence_r))
 		hang();
-
+	printf("%s end\n", __func__);
 	/* NOTREACHED - run_main_loop() does not return */
 	hang();
 }
