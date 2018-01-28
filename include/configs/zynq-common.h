@@ -10,7 +10,16 @@
 #ifndef __CONFIG_ZYNQ_COMMON_H
 #define __CONFIG_ZYNQ_COMMON_H
 
+#if 0
 #define DEBUG 1
+#endif
+
+/* Net options*/
+
+#define CONFIG_IPADDR		10.10.1.10
+#define CONFIG_NETMASK		255.255.255.0
+#define CONFIG_SERVERIP		10.10.1.5
+#define CONFIG_GATEWAYIP	10.10.1.1
 
 /* CPU clock */
 #ifndef CONFIG_CPU_FREQ_HZ
@@ -206,9 +215,9 @@
 	"ethaddr=00:0a:35:00:01:22\0"	\
 	"kernel_image=uImage\0"	\
 	"kernel_load_address=0x2080000\0" \
-	"ramdisk_image=uramdisk.image.gz\0"	\
+	"ramdisk_image=initramfs.img\0"	\
 	"ramdisk_load_address=0x4000000\0"	\
-	"devicetree_image=devicetree.dtb\0"	\
+	"devicetree_image=zynq-zed.dtb\0"	\
 	"devicetree_load_address=0x2000000\0"	\
 	"bitstream_image=system.bit.bin\0"	\
 	"boot_image=BOOT.bin\0"	\
