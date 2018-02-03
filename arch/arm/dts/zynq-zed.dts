@@ -67,25 +67,30 @@
 		spi-max-frequency = <50000000>;
 		#address-cells = <1>;
 		#size-cells = <1>;
+		/*fsbl,bit file,u-boot 3M*/
 		partition@qspi-fsbl-uboot {
-			label = "qspi-fsbl-uboot";
-			reg = <0x0 0x100000>;
+			label = "qspi-fsbl-uboot-bitfile";
+			reg = <0x0 0x300000>;
 		};
+		/*uImage 4M*/
 		partition@qspi-linux {
 			label = "qspi-linux";
-			reg = <0x100000 0x500000>;
+			reg = <0x300000 0x400000>;
 		};
+		/*dtb 64k*/
 		partition@qspi-device-tree {
 			label = "qspi-device-tree";
-			reg = <0x600000 0x20000>;
+			reg = <0x700000 0x10000>;
 		};
+		/*initramfs 10M*/
 		partition@qspi-rootfs {
 			label = "qspi-rootfs";
-			reg = <0x620000 0x5E0000>;
+			reg = <0x710000 0xA00000>;
 		};
-		partition@qspi-bitstream {
-			label = "qspi-bitstream";
-			reg = <0xC00000 0x400000>;
+		/*data, rest*/
+		partition@qspi-data {
+			label = "qspi-data";
+			reg = <0x1110000 (0x2000000 - 0x1110000)>;
 		};
 	};
 };
